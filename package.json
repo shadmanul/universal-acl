@@ -1,6 +1,6 @@
 {
   "name": "universal-acl",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "an access control module for all web apps",
   "main": "universal-acl.js",
   "scripts": {
