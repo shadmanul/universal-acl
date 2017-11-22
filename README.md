@@ -48,11 +48,12 @@ effect      {String}    [allow/deny] if allowed then user can access listed reso
 resources   {Array}
 action      {String}    url path
                         examples: 
-                        /:foo+ (one or more parameter matches)
-                        /:foo* (zero or more parameter matches)
-                        /:foo/(.*) (unnamed parameter)
+                        /api/Products/:id+ (one or more parameter matches)
+                        /api/Products/:id* (zero or more parameter matches)
+                        /api/Products/(.*)* (includes products & its childs)
+                        /api/Products/(.*) (excludes products but includes its childs)
 permission  {Array}     url methods and use * to allow or deny all methods
-option      {Object}    resource attributes
+options     {Object}    resource attributes
 ```
 
 ## addRoles (userId, roles) 
