@@ -11,7 +11,7 @@ UniversalACL = new UniversalACL(UniversalACL.mongoAdapter(db));
 ## updateRules (rules)
 add / update set of rules. Below see the example of rules object 
 #### Arguments
-```
+```bash
 rules   {object}
 ```
 #### rules.json
@@ -42,7 +42,7 @@ rules   {object}
 }
 ```
 #### Arguments
-```
+```bash
 effect      {String}    [allow/deny] if allowed then user can access listed resources.
                         if denied then user can not access listed resources.
 resources   {Array}
@@ -58,7 +58,7 @@ option      {Object}    resource attributes
 ## addRoles (userId, roles) 
 add new roles to a user
 #### Arguments
-```
+```bash
 userId  {String}
 roles   {Array}
 ```
@@ -66,7 +66,7 @@ roles   {Array}
 ## removeRoles (userId, roles)
 remove roles from a user
 #### Arguments
-```
+```bash
 userId  {String}
 roles   {Array}
 ```
@@ -74,7 +74,7 @@ roles   {Array}
 ## modifyRoles (userId, roles)
 replace existing roles and add new roles to user
 #### Arguments
-```
+```bash
 userId  {String}
 roles   {Array}
 ```
@@ -82,7 +82,7 @@ roles   {Array}
 ## isAllowed (req, userId, callback)
 check if user is allowed to access a resource. Check the callback get get true false result.
 #### Arguments
-```
+```bash
 req     {Object}
 userId  {String}
 callback   {Function}
