@@ -1,0 +1,21 @@
+{
+  "name": "universal-acl",
+  "version": "1.0.0",
+  "description": "an access control module for all web apps",
+  "main": "universal-acl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "acl"
+  ],
+  "author": "Md. Shadmanul Islam",
+  "license": "MIT",
+  "dependencies": {
+    "path-to-regexp": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shadmanul/universal-acl.git"
+  }
+}
