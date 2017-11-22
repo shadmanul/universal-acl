@@ -41,6 +41,18 @@ rules   {object}
     }
 }
 ```
+#### Arguments
+```
+effect      {String}    [allow/deny] if allowed then user can access listed resources.                             vice versa
+resources   {Array}
+action      {String}    url path
+                        examples: 
+                        /:foo+ (one or more parameter matches)
+                        /:foo* (zero or more parameter matches)
+                        /:foo/(.*) (unnamed parameter)
+permission  {Array}     url methods and use * to allow or deny all methods
+option      {Object}    resource attributes
+```
 
 ## addRoles (userId, roles) 
 add new roles to a user
