@@ -43,7 +43,8 @@ rules   {object}
 ```
 #### Arguments
 ```
-effect      {String}    [allow/deny] if allowed then user can access listed resources.                             vice versa
+effect      {String}    [allow/deny] if allowed then user can access listed resources.
+                        if denied then user can not access listed resources.
 resources   {Array}
 action      {String}    url path
                         examples: 
