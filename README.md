@@ -9,13 +9,13 @@ UniversalACL = new UniversalACL(UniversalACL.mongoAdapter(db));
 
 # Methods
 ## updateRules (rules)
-Add / update set of rules. Below see the example of rules object 
+add / update set of rules. Below see the example of rules object 
 #### Arguments
 ```
 rules   {object}
 ```
 #### rules.json
-```json
+```javascript
 {
     "guest": {
         "effect": "allow",
@@ -43,7 +43,7 @@ rules   {object}
 ```
 
 ## addRoles (userId, roles) 
-Add new roles to a user
+add new roles to a user
 #### Arguments
 ```
 userId  {String}
@@ -51,7 +51,7 @@ roles   {Array}
 ```
 
 ## removeRoles (userId, roles)
-Remove roles from a user
+remove roles from a user
 #### Arguments
 ```
 userId  {String}
@@ -59,7 +59,7 @@ roles   {Array}
 ```
 
 ## modifyRoles (userId, roles)
-Replace existing roles and add new roles to user
+replace existing roles and add new roles to user
 #### Arguments
 ```
 userId  {String}
@@ -67,7 +67,7 @@ roles   {Array}
 ```
 
 ## isAllowed (req, userId, callback)
-Check if user is allowed to access a resource. Check the callback get get true false result.
+check if user is allowed to access a resource. Check the callback get get true false result.
 #### Arguments
 ```
 req     {Object}
