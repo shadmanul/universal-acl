@@ -72,5 +72,5 @@ check if user is allowed to access a resource. Check the callback get get true f
 ```
 req     {Object}
 userId  {String}
-roles   {Function}
+callback   {Function}
 ```
