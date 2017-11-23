@@ -6,12 +6,12 @@ module.exports = class MongoAdapter {
         this.db = db;
     }
 
-    updateRules(tableName, id, rules) {
+    update(tableName, id, data) {
 
         this.db.collection(tableName, function(err, Collection) {
             Collection.update({
                 _id: id
-            }, rules, {
+            }, data, {
                 upsert: true
             });
         });
@@ -74,9 +74,13 @@ module.exports = class MongoAdapter {
             Collection.findOne({ _id: userId })
             .then(function(user){
                 callback(null, user);
+
+                return null;
             })
             .catch(function(err){
                 callback(err)
+
+                return null;
             })
         });
         
@@ -88,9 +92,13 @@ module.exports = class MongoAdapter {
             Collection.findOne({ _id: id })
             .then(function(rules){
                 callback(null, rules);
+
+                return null;
             })
             .catch(function(err){
                 callback(err)
+
+                return null;
             })
         })
 
@@ -110,9 +118,13 @@ module.exports = class MongoAdapter {
             Collection.findOne({ _id: id }, select)
             .then(function(rules){
                 callback(null, rules);
+                
+                return null;
             })
             .catch(function(err){
                 callback(err)
+                
+                return null;
             })
         })
 

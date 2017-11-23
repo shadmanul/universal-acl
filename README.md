@@ -8,6 +8,25 @@ UniversalACL = new UniversalACL(UniversalACL.mongoAdapter(db));
 ```
 
 # Methods
+## updateMapData(mapData)
+update map data. here in mapData object you have provide name for actions.
+#### Arguments
+```
+mapData   {object}
+```
+#### rules.json
+```javascript
+{
+    "mappings": {
+        "ExtendedUser:findById": "/api/ExtendedUsers/:id",
+        "ExtendedUser:list": "/api/ExtendedUsers/:id",
+        "ExtendedUser:login": "/api/ExtendedUsers/login",
+        "ExtendedUser:create": "/api/ExtendedUsers"
+    }
+}
+```
+you can say inside mappings object, keys are synonyms for actions.
+
 ## updateRules (rules)
 add / update set of rules. Below see the example of rules object 
 #### Arguments
@@ -25,7 +44,7 @@ rules   {object}
                 "options": {}
             },
             {
-                "action": "/api/ExtendedUsers",
+                "name": "ExtendedUser:create",
                 "permissions": ["POST"],
                 "options": {}
             }
@@ -53,7 +72,8 @@ rules   {object}
 effect      {String}    [allow/deny] if allowed then user can access listed resources.
                         if denied then user can not access listed resources.
 resources   {Array}
-action      {String}    url paths.
+name        {String}    action name. but to use name you have to update map data.
+action      {String}    url paths. not necessary if name is provided.
                         examples: 
                         /api/Products/:id+ (one or more parameter matches)
                         /api/Products/:id* (zero or more parameter matches)

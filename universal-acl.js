@@ -11,11 +11,13 @@ module.exports = class UniversalACL {
     constructor(adapter) {
         this.adapter = adapter;
         this.rules = {};
+        this.mapData = {};
         this.collectionId = '757365722d72756c6573';
 
         this.tables = {
             UniversalACL: "UniversalACL",
-            UniversalACLRoles: "UniversalACLRoles"
+            UniversalACLRoles: "UniversalACLRoles",
+            UniversalACLMapping: "UniversalACLMapping"
         }
     }
 
@@ -35,8 +37,7 @@ module.exports = class UniversalACL {
      */
     updateRules(rules) {
         this.rules = rules;
-        var adapter = this.adapter;
-        adapter.updateRules(this.tables.UniversalACL, this.collectionId, this.rules);
+        this.adapter.update(this.tables.UniversalACL, this.collectionId, this.rules);
     }
 
     /**
@@ -45,9 +46,7 @@ module.exports = class UniversalACL {
      * @param {[string]} roles 
      */
     addRoles(userId, roles) {
-        var adapter = this.adapter;
-
-        adapter.addRoles(this.tables.UniversalACLRoles, userId, roles);
+        this.adapter.addRoles(this.tables.UniversalACLRoles, userId, roles);
     }
 
     /**
@@ -56,9 +55,7 @@ module.exports = class UniversalACL {
      * @param {[string]} roles 
      */
     removeRoles(userId, roles) {
-        var adapter = this.adapter;
-
-        adapter.removeRoles(this.tables.UniversalACLRoles, userId, roles);
+        this.adapter.removeRoles(this.tables.UniversalACLRoles, userId, roles);
     }
 
     /**
@@ -67,9 +64,7 @@ module.exports = class UniversalACL {
      * @param {[string]} roles 
      */
     modifyRoles(userId, roles) {
-        var adapter = this.adapter;
-
-        adapter.modifyRoles(this.tables.UniversalACLRoles, userId, roles);
+        this.adapter.modifyRoles(this.tables.UniversalACLRoles, userId, roles);
     }
 
     /**
@@ -81,6 +76,7 @@ module.exports = class UniversalACL {
     isAllowed(req, userId, callback) {
         var adapter = this.adapter;
         var tables = this.tables;
+        var mapData = this.mapData;
 
         var isAllowed = false;
         var effect = null;
@@ -98,8 +94,18 @@ module.exports = class UniversalACL {
                             effect = rules.roles[user.roles[i]].effect;
 
                             isAllowed = rules.roles[user.roles[i]].resources.some(function(resource) {
-                                return resource.permissions.some(x => x.toLowerCase() === req.method.toLowerCase() || x.toLowerCase() === '*') &&
-                                    pathToRegexp(resource.action).test(req.url.split("?")[0]);
+                                var methodMatched       = resource.permissions.some(x => x.toLowerCase() === req.method.toLowerCase() || x.toLowerCase() === '*');
+                                var nameOrPathMatched   = false;
+
+                                if(resource.name){
+                                    if(mapData.mappings[resource.name]){
+                                        nameOrPathMatched = pathToRegexp(mapData.mappings[resource.name]).test(req.url.split("?")[0])
+                                    }
+                                }
+                                else{
+                                    nameOrPathMatched = pathToRegexp(resource.action).test(req.url.split("?")[0]);
+                                }
+                                return methodMatched && nameOrPathMatched;
                             })
 
                             if (isAllowed) {
@@ -117,7 +123,6 @@ module.exports = class UniversalACL {
             }
         })
     }
-
     
     /**
      * 
@@ -133,5 +138,14 @@ module.exports = class UniversalACL {
                 callback(null, roles.roles);
             }
         })
+    }
+
+    /**
+     * 
+     * @param {[object]} mapData 
+     */
+    updateMapData(mapData) {
+        this.mapData = mapData;
+        this.adapter.update(this.tables.UniversalACLMapping, this.collectionId, this.mapData);
     }
 }
