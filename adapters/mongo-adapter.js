@@ -6,11 +6,11 @@ module.exports = class MongoAdapter {
         this.db = db;
     }
 
-    updateRules(tableName, collectionId, rules) {
+    updateRules(tableName, id, rules) {
 
         this.db.collection(tableName, function(err, Collection) {
             Collection.update({
-                _id: collectionId
+                _id: id
             }, rules, {
                 upsert: true
             });
@@ -70,8 +70,8 @@ module.exports = class MongoAdapter {
 
     findRoles (tableName, userId, callback){
 
-        this.db.collection(tableName, function(err, UniversalACLRoles) {
-            UniversalACLRoles.findOne({ _id: userId })
+        this.db.collection(tableName, function(err, Collection) {
+            Collection.findOne({ _id: userId })
             .then(function(user){
                 callback(null, user);
             })
@@ -80,5 +80,41 @@ module.exports = class MongoAdapter {
             })
         });
         
+    }
+
+    findRules (tableName, id, callback){
+
+        this.db.collection(tableName, function(err, Collection) {
+            Collection.findOne({ _id: id })
+            .then(function(rules){
+                callback(null, rules);
+            })
+            .catch(function(err){
+                callback(err)
+            })
+        })
+
+    }
+
+    getRoles (tableName, id, roleNames, callback){
+
+        var select = [];
+        
+        for(var key in roleNames){
+            select.push({ ["roles." + roleNames[key]]: 1 });
+        }
+
+        select = Object.assign({}, ...select);
+
+        this.db.collection(tableName, function(err, Collection) {
+            Collection.findOne({ _id: id }, select)
+            .then(function(rules){
+                callback(null, rules);
+            })
+            .catch(function(err){
+                callback(err)
+            })
+        })
+
     }
 }

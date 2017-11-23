@@ -29,7 +29,14 @@ rules   {object}
                 "permissions": ["POST"],
                 "options": {}
             }
-        ]
+        ],
+        "privileges": [{
+            "action": "/api/ExtendedUsers/:id",
+            "options": {
+                "DELETE_BUTTON": false,
+                "EDIT_BUTTON": false
+            }
+        }]
     },
     "admin": {
         "effect": "deny",
@@ -46,14 +53,15 @@ rules   {object}
 effect      {String}    [allow/deny] if allowed then user can access listed resources.
                         if denied then user can not access listed resources.
 resources   {Array}
-action      {String}    url path
+action      {String}    url paths.
                         examples: 
                         /api/Products/:id+ (one or more parameter matches)
                         /api/Products/:id* (zero or more parameter matches)
                         /api/Products/(.*)* (includes products & its childs)
                         /api/Products/(.*) (excludes products but includes its childs)
-permission  {Array}     url methods and use * to allow or deny all methods
-options     {Object}    resource attributes
+permission  {Array}     url methods and use * to allow or deny all methods.
+privileges  {Array}     list of privileges for listed resources.  
+options     {Object}    resource attributes.
 ```
 
 ## addRoles (userId, roles) 
@@ -87,4 +95,26 @@ check if user is allowed to access a resource. Check the callback get get true f
 req      {Object}   {method: "GET", url: "/api/foo"}
 userId   {String}
 callback {Function}
+```
+
+## getRoles (roleNames, callback)
+get role definitions.
+#### Arguments
+```
+roleNames   {String}    example: ["member", "admin"]
+callback    {Function}
+```
+#### Example
+```javascript
+router.get('/api/universalACL/roles', function(req, res, next) {
+    var roleNames = JSON.parse(req.query.roleNames);
+    UniversalACL.getRoles( roleNames, function(err, roles){
+        if(err){
+            next(err);
+        }
+        else{
+            res.send(roles);
+        }
+    })
+});
 ```
