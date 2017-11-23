@@ -40,13 +40,11 @@ rules   {object}
         "effect": "allow",
         "resources": [{
                 "action": "/api/ExtendedUsers/login",
-                "permissions": ["POST"],
-                "options": {}
+                "permissions": ["POST"]
             },
             {
                 "name": "ExtendedUser:create",
-                "permissions": ["POST"],
-                "options": {}
+                "permissions": ["POST"]
             }
         ],
         "privileges": [{
@@ -61,8 +59,7 @@ rules   {object}
         "effect": "deny",
         "resources": [{
             "action": "/api/ExtendedUsers",
-            "permissions": ["GET"],
-            "options": {}
+            "permissions": ["GET"]
         }]
     }
 }
