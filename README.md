@@ -14,7 +14,7 @@ update map data. here in mapData object you have provide name for actions.
 ```
 mapData   {object}
 ```
-#### rules.json
+#### mapping.json
 ```javascript
 {
     "mappings": {
