@@ -148,4 +148,11 @@ module.exports = class UniversalACL {
         this.mapData = mapData;
         this.adapter.update(this.tables.UniversalACLMapping, this.collectionId, this.mapData);
     }
+
+    addRoleToRules(filePath){
+        var role = require(filePath);
+        var roles = Object.assign({}, this.rules.roles, role);
+        this.rules.roles = roles;
+        this.updateRules(this.rules);
+    }
 }

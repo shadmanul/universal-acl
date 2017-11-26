@@ -135,3 +135,19 @@ router.get('/api/universalACL/roles', function(req, res, next) {
     })
 });
 ```
+
+## addRoleToRules(filePath)
+add a role to existing rules using a json file
+#### Arguments
+```
+filePath    {String}    example: path.resolve(__dirname, '../lib/acl/acl-roles/superadmin.json')
+```
+#### superadmin.json
+```javascript
+{
+    "superadmin": {
+        "effect": "deny",
+        "resources": []
+    }
+}
+```
