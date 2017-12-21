@@ -106,12 +106,25 @@ roles   {Array}
 ```
 
 ## isAllowed (req, userId, callback)
-check if user is allowed to access a resource. Check the callback get get true false result. in the middleware check isAllowed. if isAllowed false send an error response
+check if user is allowed to access a resource. Check the callback to get true false result. in the middleware check isAllowed. if isAllowed false send an error response
 #### Arguments
 ```
 req      {Object}   {method: "GET", url: "/api/foo"}
 userId   {String}
 callback {Function}
+```
+#### Example
+```javascript
+UniversalACL.isAllowed(req, userId, function(err, isAllowed) {
+    if (isAllowed) {
+        next();
+    } else {
+        var error = new Error();
+        error.status = 401;
+        error.message = 'You need to be authenticated to access this endpoint';
+        next(error);
+    }
+})
 ```
 
 ## getRoles (roleNames, callback)
